@@ -1,4 +1,5 @@
 ﻿using System;
+using Orleans.Samples.ClassScheduler.Gain.Interface;
 
 namespace Orleans.Samples.ClassScheduler.StandaloneSilo
 {
@@ -20,13 +21,25 @@ namespace Orleans.Samples.ClassScheduler.StandaloneSilo
 
             Orleans.OrleansClient.Initialize("DevTestClientConfiguration.xml");
 
-            // TODO: once the previous call returns, the silo is up and running.
-            //       This is the place your custom logic, for example calling client logic
-            //       or initializing an HTTP front end for accepting incoming requests.
+            var classGuid = new Guid("49655b03-6eef-4f6e-a2ec-12357fb3fe10");
 
-            Console.WriteLine("Orleans Silo is running.\nPress Enter to terminate...");
+            Console.WriteLine("Orleans Silo is running.\nPress Enter to continue...");
             Console.ReadLine();
 
+            var collegeClass = GrainFactory.GetGrain<ICollegeClass>(classGuid);
+            collegeClass.Configure("Calculus 101", "MAT");
+            Console.WriteLine("Class configured.\nPress Enter to continue...");
+            Console.ReadLine();
+
+            var collegeClass2 = GrainFactory.GetGrain<ICollegeClass>(classGuid);
+            string name = collegeClass2.GetName().Result;
+            string subject = collegeClass2.GetSubject().Result;
+            Console.WriteLine("Retrieved class information (Name: {0}, SUbject: {1}).\nPress any key to continue...",
+                name, subject);
+            Console.ReadKey();
+
+            Console.WriteLine("Test complete.\nPress Enter to terminate...");
+            Console.ReadLine();
             hostDomain.DoCallBack(ShutdownSilo);
         }
 
