@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Orleans.Host;
 using Orleans.Samples.ClassScheduler.Data;
@@ -12,14 +13,14 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
     public class StudentController : Controller
     {
         // GET: Student
-        public ActionResult Index(string id)
+        public async Task<ActionResult> Index(string id)
         {
             OrleansHelper.EnsureOrleansClientInitialized();
 
             Guid studentGuid = new Guid(id);
             var grain = GrainFactory.GetGrain<IStudent>(studentGuid);
-            
-            StudentInfo studentInfo = grain.GetInfo().Result;
+
+            StudentInfo studentInfo = await grain.GetInfo();
 
             var student = new StudentViewModel()
             {
@@ -36,12 +37,12 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(StudentViewModel student)
+        public async Task<ActionResult> Create(StudentViewModel student)
         {
             OrleansHelper.EnsureOrleansClientInitialized();
 
             var grain = GrainFactory.GetGrain<IStudent>(student.Id);
-            grain.SetName(student.FirstName, student.LastName);
+            await grain.SetName(student.FirstName, student.LastName);
             return RedirectToAction("Index", new { id = student.Id.ToString() });
         }
     }
