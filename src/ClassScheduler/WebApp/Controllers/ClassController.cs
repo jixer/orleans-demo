@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using Orleans.Samples.ClassScheduler.Data;
 using Orleans.Samples.ClassScheduler.Gain.Interface;
 using Orleans.Samples.ClassScheduler.WebApp.Helper;
@@ -52,6 +48,23 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
             grain.Configure(viewModel.Name, viewModel.Subject);
             grain.AssignTeacher(new Guid(viewModel.Teacher));
             return RedirectToAction("Index", "Class", new { id = viewModel.Id});
+        }
+
+        public ActionResult Register()
+        {
+            return View(new RegistrationViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult Register(RegistrationViewModel registration)
+        {
+            OrleansHelper.EnsureOrleansClientInitialized();
+
+            ICollegeClass grain = GrainFactory.GetGrain<ICollegeClass>(registration.ClassId);
+            grain.RegisterStudent(registration.StudentId);
+
+
+            return RedirectToAction("Index", new {id = registration.ClassId.ToString()});
         }
     }
 }
