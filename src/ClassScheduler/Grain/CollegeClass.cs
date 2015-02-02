@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Orleans.Samples.ClassScheduler.Data;
 using Orleans.Samples.ClassScheduler.Gain.Interface;
 
 namespace Orleans.Samples.ClassScheduler.Gain
@@ -12,26 +9,26 @@ namespace Orleans.Samples.ClassScheduler.Gain
     {
         private string _subject;
         private string _name;
-        private Guid _teacher;
-        private IList<Guid> _students = new List<Guid>();
+        private ITeacher _teacher;
+        private IList<IStudent> _students = new List<IStudent>();
 
         public Task Configure(string name, string subject)
         {
             _name = name;
             _subject = subject;
-            return Task.FromResult(0);
+            return TaskDone.Done;
         }
 
-        public Task AssignTeacher(Guid teacherId)
+        public Task AssignTeacher(ITeacher teacher)
         {
-            _teacher = teacherId;
-            return Task.FromResult(0);
+            _teacher = teacher;
+            return TaskDone.Done;
         }
 
-        public Task RegisterStudent(Guid studentId)
+        public Task RegisterStudent(IStudent student)
         {
-            _students.Add(studentId);
-            return Task.FromResult(0);
+            _students.Add(student);
+            return TaskDone.Done;
         }
 
         public Task<string> GetName()
@@ -44,17 +41,14 @@ namespace Orleans.Samples.ClassScheduler.Gain
             return Task.FromResult(_subject);
         }
 
-        public Task<ClassInfo> GetClassInfo()
+        public Task<ITeacher> GetTeacher()
         {
-            var classInfo = new ClassInfo()
-            {
-                Name = _name,
-                Subject = _subject,
-                Teacher = _teacher,
-                Students = _students
-            };
+            return Task.FromResult(_teacher);
+        }
 
-            return Task.FromResult(classInfo);
+        public Task<int> GetClassSize()
+        {
+            return Task.FromResult(_students.Count);
         }
     }
 }
