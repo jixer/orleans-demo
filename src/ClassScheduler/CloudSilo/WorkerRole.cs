@@ -9,6 +9,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
+using Orleans.Host;
 
 namespace CloudSilo
 {
@@ -16,6 +17,7 @@ namespace CloudSilo
     {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
+        private OrleansAzureSilo _silo;
 
         public override void Run()
         {
@@ -40,6 +42,9 @@ namespace CloudSilo
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
 
             bool result = base.OnStart();
+
+            _silo = new OrleansAzureSilo();
+            result &= _silo.Start(RoleEnvironment.DeploymentId, RoleEnvironment.CurrentRoleInstance);
 
             Trace.TraceInformation("CloudSilo has been started");
 
