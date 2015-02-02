@@ -1,5 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Web.Mvc;
+using Orleans.Host;
+using Orleans.Samples.ClassScheduler.Data;
+using Orleans.Samples.ClassScheduler.Gain.Interface;
+using Orleans.Samples.ClassScheduler.WebApp.Helper;
 using Orleans.Samples.ClassScheduler.WebApp.Models;
 
 namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
@@ -7,13 +12,20 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
     public class StudentController : Controller
     {
         // GET: Student
-        public ActionResult Index(string studentId)
+        public ActionResult Index(string id)
         {
+            OrleansHelper.EnsureOrleansClientInitialized();
+
+            Guid studentGuid = new Guid(id);
+            var grain = GrainFactory.GetGrain<IStudent>(studentGuid);
+            
+            StudentInfo studentInfo = grain.GetInfo().Result;
+
             var student = new StudentViewModel()
             {
-                Id = new Guid(studentId),
-                FirstName = "Chris",
-                LastName = "Myers"
+                Id = studentGuid,
+                FirstName = studentInfo.FirstName,
+                LastName = studentInfo.LastName
             };
             return View(student);
         }
@@ -26,7 +38,11 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
         [HttpPost]
         public ActionResult Create(StudentViewModel student)
         {
-            return RedirectToAction("Index", new { studentId = student.Id.ToString() });
+            OrleansHelper.EnsureOrleansClientInitialized();
+
+            var grain = GrainFactory.GetGrain<IStudent>(student.Id);
+            grain.SetName(student.FirstName, student.LastName);
+            return RedirectToAction("Index", new { id = student.Id.ToString() });
         }
     }
 }
