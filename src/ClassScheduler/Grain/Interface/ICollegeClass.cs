@@ -1,16 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
-using Orleans.Samples.ClassScheduler.Data;
+﻿using System.Threading.Tasks;
 
 namespace Orleans.Samples.ClassScheduler.Gain.Interface
 {
     public interface ICollegeClass : IGrainWithGuidKey
     {
         Task Configure(string name, string subject);
-        Task AssignTeacher(Guid teacherId);
-        Task RegisterStudent(Guid studentId);
+        Task AssignTeacher(ITeacher teacher);
+        Task RegisterStudent(IStudent student);
         Task<string> GetName();
         Task<string> GetSubject();
-        Task<ClassInfo> GetClassInfo();
+        Task<ITeacher> GetTeacher();
+        Task<int> GetClassSize();
     }
 }
