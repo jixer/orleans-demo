@@ -14,7 +14,7 @@
 #pragma warning disable 1591
 #pragma warning disable 1998
 
-namespace Interface
+namespace Orleans.Samples.ClassScheduler.Gain.Interface
 {
     using System;
     using System.Net;
@@ -24,60 +24,52 @@ namespace Interface
     using System.Collections.Generic;
     using Orleans;
     using Orleans.Runtime;
+    using System.Collections;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    public class Grain1Factory
+    public class CollegeClassFactory
     {
         
 
-                        public static Interface.IGrain1 GetGrain(long primaryKey)
+                        public static Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass GetGrain(System.Guid primaryKey)
                         {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(Interface.IGrain1), -524994641, primaryKey));
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass), -877677476, primaryKey));
                         }
 
-                        public static Interface.IGrain1 GetGrain(long primaryKey, string grainClassNamePrefix)
+                        public static Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass GetGrain(System.Guid primaryKey, string grainClassNamePrefix)
                         {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(Interface.IGrain1), -524994641, primaryKey, grainClassNamePrefix));
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass), -877677476, primaryKey, grainClassNamePrefix));
                         }
 
-                        public static Interface.IGrain1 GetGrain(System.Guid primaryKey)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(Interface.IGrain1), -524994641, primaryKey));
-                        }
-
-                        public static Interface.IGrain1 GetGrain(System.Guid primaryKey, string grainClassNamePrefix)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(Interface.IGrain1), -524994641, primaryKey, grainClassNamePrefix));
-                        }
-
-            public static Interface.IGrain1 Cast(global::Orleans.Runtime.IAddressable grainRef)
+            public static Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass Cast(global::Orleans.Runtime.IAddressable grainRef)
             {
                 
-                return Grain1Reference.Cast(grainRef);
+                return CollegeClassReference.Cast(grainRef);
             }
         
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
         [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
         [System.SerializableAttribute()]
-        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Interface.Interface.IGrain1")]
-        internal class Grain1Reference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Interface.IGrain1
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Orleans.Samples.ClassScheduler.Gain.Interface.Orleans.Samples.ClassScheduler.Gain" +
+            ".Interface.ICollegeClass")]
+        internal class CollegeClassReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass
         {
             
 
-            public static Interface.IGrain1 Cast(global::Orleans.Runtime.IAddressable grainRef)
+            public static Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass Cast(global::Orleans.Runtime.IAddressable grainRef)
             {
                 
-                return (Interface.IGrain1) global::Orleans.Runtime.GrainReference.CastInternal(typeof(Interface.IGrain1), (global::Orleans.Runtime.GrainReference gr) => { return new Grain1Reference(gr);}, grainRef, -524994641);
+                return (Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass) global::Orleans.Runtime.GrainReference.CastInternal(typeof(Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass), (global::Orleans.Runtime.GrainReference gr) => { return new CollegeClassReference(gr);}, grainRef, -877677476);
             }
             
-            protected internal Grain1Reference(global::Orleans.Runtime.GrainReference reference) : 
+            protected internal CollegeClassReference(global::Orleans.Runtime.GrainReference reference) : 
                     base(reference)
             {
             }
             
-            protected internal Grain1Reference(SerializationInfo info, StreamingContext context) : 
+            protected internal CollegeClassReference(SerializationInfo info, StreamingContext context) : 
                     base(info, context)
             {
             }
@@ -86,7 +78,7 @@ namespace Interface
             {
                 get
                 {
-                    return -524994641;
+                    return -877677476;
                 }
             }
             
@@ -94,53 +86,74 @@ namespace Interface
             {
                 get
                 {
-                    return "Interface.Interface.IGrain1";
+                    return "Orleans.Samples.ClassScheduler.Gain.Interface.Orleans.Samples.ClassScheduler.Gain" +
+                        ".Interface.ICollegeClass";
                 }
             }
             
             [global::Orleans.CodeGeneration.CopierMethodAttribute()]
             public static object _Copier(object original)
             {
-                Grain1Reference input = ((Grain1Reference)(original));
-                return ((Grain1Reference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+                CollegeClassReference input = ((CollegeClassReference)(original));
+                return ((CollegeClassReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
             }
             
             [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
             public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
             {
-                Grain1Reference input = ((Grain1Reference)(original));
+                CollegeClassReference input = ((CollegeClassReference)(original));
                 global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
             }
             
             [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
             public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
             {
-                return Grain1Reference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+                return CollegeClassReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
             }
             
             public override bool IsCompatible(int interfaceId)
             {
-                return (interfaceId == this.InterfaceId);
+                return ((interfaceId == this.InterfaceId) 
+                            || (interfaceId == -1097320095));
             }
             
             protected override string GetMethodName(int interfaceId, int methodId)
             {
-                return Grain1MethodInvoker.GetMethodName(interfaceId, methodId);
+                return CollegeClassMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+            
+            System.Threading.Tasks.Task Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.Configure(string name, string subject)
+            {
+
+                return base.InvokeMethodAsync<object>(-1038651987, new object[] {name, subject} );
+            }
+            
+            System.Threading.Tasks.Task<string> Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.GetName()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-1256896228, new object[] {} );
+            }
+            
+            System.Threading.Tasks.Task<string> Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.GetSubject()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-1553342840, new object[] {} );
             }
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Interface.Interface.IGrain1", -524994641)]
-    internal class Grain1MethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Orleans.Samples.ClassScheduler.Gain.Interface.Orleans.Samples.ClassScheduler.Gain" +
+        ".Interface.ICollegeClass", -877677476)]
+    internal class CollegeClassMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
     {
         
         int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
         {
             get
             {
-                return -524994641;
+                return -877677476;
             }
         }
         
@@ -151,7 +164,18 @@ namespace Interface
             {{                    if (grain == null) throw new System.ArgumentNullException("grain");
                 switch (interfaceId)
                 {
-                    case -524994641:  // IGrain1
+                    case -877677476:  // ICollegeClass
+                        switch (methodId)
+                        {
+                            case -1038651987: 
+                                return ((ICollegeClass)grain).Configure((String)arguments[0], (String)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1256896228: 
+                                return ((ICollegeClass)grain).GetName().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1553342840: 
+                                return ((ICollegeClass)grain).GetSubject().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case -1097320095:  // IGrainWithGuidKey
                         switch (methodId)
                         {
                             default: 
@@ -175,7 +199,20 @@ namespace Interface
             switch (interfaceId)
             {
                 
-                case -524994641:  // IGrain1
+                case -877677476:  // ICollegeClass
+                    switch (methodId)
+                    {
+                        case -1038651987:
+                            return "Configure";
+                    case -1256896228:
+                            return "GetName";
+                    case -1553342840:
+                            return "GetSubject";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case -1097320095:  // IGrainWithGuidKey
                     switch (methodId)
                     {
                         
