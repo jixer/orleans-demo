@@ -1,35 +1,33 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Orleans.Providers;
 using Orleans.Samples.ClassScheduler.Data;
 using Orleans.Samples.ClassScheduler.Gain.Interface;
 
 namespace Orleans.Samples.ClassScheduler.Gain
 {
-    class Student : Grain, IStudent
+    [StorageProvider(ProviderName = "AzureStore")]
+    class Student : Grain<IStudentState>, IStudent
     {
-        private string _firstName;
-        private string _lastName;
-
         public Task SetName(string firstName, string lastName)
         {
-            _firstName = firstName;
-            _lastName = lastName;
-            return Task.FromResult(0);
+            State.FirstName = firstName;
+            State.LastName = lastName;
+            return State.WriteStateAsync();
         }
 
         public Task<StudentInfo> GetInfo()
         {
             var studentInfo = new StudentInfo()
             {
-                FirstName = _firstName,
-                LastName = _lastName
+                FirstName = State.FirstName,
+                LastName = State.LastName
             };
             return Task.FromResult(studentInfo);
         }
 
         public Task<string> GetFullName()
         {
-            string fullNAme = string.Format("{0} {1}", _firstName, _lastName);
+            string fullNAme = string.Format("{0} {1}", State.FirstName, State.LastName);
             return Task.FromResult(fullNAme);
         }
     }

@@ -16,12 +16,230 @@
 
 namespace Orleans.Samples.ClassScheduler.Gain
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections;
     using Orleans.CodeGeneration;
     using Orleans;
-    using System;
+    using Orleans.Samples.ClassScheduler.Gain.Interface;
     using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
     
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [SerializableAttribute()]
+    [global::Orleans.CodeGeneration.GrainStateAttribute("Orleans.Samples.ClassScheduler.Gain.Orleans.Samples.ClassScheduler.Gain.CollegeCl" +
+        "ass")]
+    public class CollegeClassState : global::Orleans.CodeGeneration.GrainState, IClassState
+    {
+        
+
+            public String Name { get; set; }
+
+            public String Subject { get; set; }
+
+            public Guid Teacher { get; set; }
+
+            public IList<Guid> Students { get; set; }
+
+            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
+            {   
+                object value;
+                if (values == null) { InitStateFields(); return; }
+                if (values.TryGetValue("Name", out value)) Name = (String) value;
+                if (values.TryGetValue("Subject", out value)) Subject = (String) value;
+                if (values.TryGetValue("Teacher", out value)) Teacher = (Guid) value;
+                if (values.TryGetValue("Students", out value)) Students = (IList<Guid>) value;
+            }
+
+            public override System.String ToString()
+            {
+                return System.String.Format("CollegeClassState( Name={0} Subject={1} Teacher={2} Students={3} )", Name, Subject, Teacher, Students);
+            }
+        
+        public CollegeClassState() : 
+                base("Orleans.Samples.ClassScheduler.Gain.CollegeClass")
+        {
+            this.InitStateFields();
+        }
+        
+        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
+        {
+            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
+            result["Name"] = this.Name;
+            result["Subject"] = this.Subject;
+            result["Teacher"] = this.Teacher;
+            result["Students"] = this.Students;
+            return result;
+        }
+        
+        private void InitStateFields()
+        {
+            this.Name = default(String);
+            this.Subject = default(String);
+            this.Teacher = default(Guid);
+            this.Students = default(IList<Guid>);
+        }
+        
+        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+        public static object _Copier(object original)
+        {
+            CollegeClassState input = ((CollegeClassState)(original));
+            return input.DeepCopy();
+        }
+        
+        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            CollegeClassState input = ((CollegeClassState)(original));
+            input.SerializeTo(stream);
+        }
+        
+        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            CollegeClassState result = new CollegeClassState();
+            result.DeserializeFrom(stream);
+            return result;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [SerializableAttribute()]
+    [global::Orleans.CodeGeneration.GrainStateAttribute("Orleans.Samples.ClassScheduler.Gain.Orleans.Samples.ClassScheduler.Gain.Student")]
+    public class StudentState : global::Orleans.CodeGeneration.GrainState, IStudentState
+    {
+        
+
+            public String FirstName { get; set; }
+
+            public String LastName { get; set; }
+
+            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
+            {   
+                object value;
+                if (values == null) { InitStateFields(); return; }
+                if (values.TryGetValue("FirstName", out value)) FirstName = (String) value;
+                if (values.TryGetValue("LastName", out value)) LastName = (String) value;
+            }
+
+            public override System.String ToString()
+            {
+                return System.String.Format("StudentState( FirstName={0} LastName={1} )", FirstName, LastName);
+            }
+        
+        public StudentState() : 
+                base("Orleans.Samples.ClassScheduler.Gain.Student")
+        {
+            this.InitStateFields();
+        }
+        
+        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
+        {
+            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
+            result["FirstName"] = this.FirstName;
+            result["LastName"] = this.LastName;
+            return result;
+        }
+        
+        private void InitStateFields()
+        {
+            this.FirstName = default(String);
+            this.LastName = default(String);
+        }
+        
+        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+        public static object _Copier(object original)
+        {
+            StudentState input = ((StudentState)(original));
+            return input.DeepCopy();
+        }
+        
+        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            StudentState input = ((StudentState)(original));
+            input.SerializeTo(stream);
+        }
+        
+        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            StudentState result = new StudentState();
+            result.DeserializeFrom(stream);
+            return result;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [SerializableAttribute()]
+    [global::Orleans.CodeGeneration.GrainStateAttribute("Orleans.Samples.ClassScheduler.Gain.Orleans.Samples.ClassScheduler.Gain.Teacher")]
+    public class TeacherState : global::Orleans.CodeGeneration.GrainState, ITeacherState
+    {
+        
+
+            public String FirstName { get; set; }
+
+            public String LastName { get; set; }
+
+            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
+            {   
+                object value;
+                if (values == null) { InitStateFields(); return; }
+                if (values.TryGetValue("FirstName", out value)) FirstName = (String) value;
+                if (values.TryGetValue("LastName", out value)) LastName = (String) value;
+            }
+
+            public override System.String ToString()
+            {
+                return System.String.Format("TeacherState( FirstName={0} LastName={1} )", FirstName, LastName);
+            }
+        
+        public TeacherState() : 
+                base("Orleans.Samples.ClassScheduler.Gain.Teacher")
+        {
+            this.InitStateFields();
+        }
+        
+        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
+        {
+            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
+            result["FirstName"] = this.FirstName;
+            result["LastName"] = this.LastName;
+            return result;
+        }
+        
+        private void InitStateFields()
+        {
+            this.FirstName = default(String);
+            this.LastName = default(String);
+        }
+        
+        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+        public static object _Copier(object original)
+        {
+            TeacherState input = ((TeacherState)(original));
+            return input.DeepCopy();
+        }
+        
+        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            TeacherState input = ((TeacherState)(original));
+            input.SerializeTo(stream);
+        }
+        
+        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            TeacherState result = new TeacherState();
+            result.DeserializeFrom(stream);
+            return result;
+        }
+    }
 }
 #pragma warning restore 162
 #pragma warning restore 219

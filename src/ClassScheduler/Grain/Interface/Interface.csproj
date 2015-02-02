@@ -44,9 +44,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IClassState.cs" />
     <Compile Include="ICollegeClass.cs" />
     <Compile Include="IStudent.cs" />
+    <Compile Include="IStudentState.cs" />
     <Compile Include="ITeacher.cs" />
+    <Compile Include="ITeacherState.cs" />
     <Compile Include="Properties\orleans.codegen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

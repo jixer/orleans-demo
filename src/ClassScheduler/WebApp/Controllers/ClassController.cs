@@ -23,6 +23,8 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
 
             ITeacher teacherGrain = GrainFactory.GetGrain<ITeacher>(classInfo.Teacher);
             string teacherName = await teacherGrain.GetFullName();
+            int studentCount = 0;
+            if (classInfo.Students != null) studentCount = classInfo.Students.Count;
 
             var classView = new ClassViewModel()
             {
@@ -30,7 +32,7 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
                 Name = classInfo.Name,
                 Subject = classInfo.Subject,
                 Teacher = teacherName,
-                ClassSize = classInfo.Students.Count
+                ClassSize = studentCount
             };
             return View(classView);
         }
@@ -41,12 +43,12 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(ClassViewModel viewModel)
+        public async Task<ActionResult> Create(ClassViewModel viewModel)
         {
             OrleansHelper.EnsureOrleansClientInitialized();
             ICollegeClass grain = GrainFactory.GetGrain<ICollegeClass>(viewModel.Id);
             grain.Configure(viewModel.Name, viewModel.Subject);
-            grain.AssignTeacher(new Guid(viewModel.Teacher));
+            await grain.AssignTeacher(new Guid(viewModel.Teacher));
             return RedirectToAction("Index", "Class", new { id = viewModel.Id});
         }
 
@@ -56,13 +58,12 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegistrationViewModel registration)
+        public async Task<ActionResult> Register(RegistrationViewModel registration)
         {
             OrleansHelper.EnsureOrleansClientInitialized();
 
             ICollegeClass grain = GrainFactory.GetGrain<ICollegeClass>(registration.ClassId);
-            grain.RegisterStudent(registration.StudentId);
-
+            await grain.RegisterStudent(registration.StudentId);
 
             return RedirectToAction("Index", new {id = registration.ClassId.ToString()});
         }

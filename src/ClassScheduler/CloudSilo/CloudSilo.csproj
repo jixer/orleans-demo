@@ -66,6 +66,9 @@
     <Reference Include="OrleansAzureUtils">
       <HintPath>..\..\..\..\..\Microsoft Codename Orleans SDK v0.9\SDK\Binaries\OrleansServer\OrleansAzureUtils.dll</HintPath>
     </Reference>
+    <Reference Include="OrleansProviders">
+      <HintPath>..\..\..\..\..\Microsoft Codename Orleans SDK v0.9\SDK\Binaries\OrleansServer\OrleansProviders.dll</HintPath>
+    </Reference>
     <Reference Include="OrleansRuntime">
       <HintPath>..\..\..\..\..\Microsoft Codename Orleans SDK v0.9\SDK\Binaries\OrleansServer\OrleansRuntime.dll</HintPath>
     </Reference>

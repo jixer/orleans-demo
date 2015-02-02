@@ -1,57 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Orleans.Providers;
 using Orleans.Samples.ClassScheduler.Data;
 using Orleans.Samples.ClassScheduler.Gain.Interface;
 
 namespace Orleans.Samples.ClassScheduler.Gain
 {
-    class CollegeClass : Grain, ICollegeClass
+    [StorageProvider(ProviderName = "AzureStore")]
+    class CollegeClass : Grain<IClassState> , ICollegeClass
     {
-        private string _subject;
-        private string _name;
-        private Guid _teacher;
-        private IList<Guid> _students = new List<Guid>();
-
         public Task Configure(string name, string subject)
         {
-            _name = name;
-            _subject = subject;
-            return Task.FromResult(0);
+            State.Name = name;
+            State.Subject = subject;
+            return State.WriteStateAsync();
         }
 
         public Task AssignTeacher(Guid teacherId)
         {
-            _teacher = teacherId;
-            return Task.FromResult(0);
+            State.Teacher = teacherId;
+            return State.WriteStateAsync();
         }
 
         public Task RegisterStudent(Guid studentId)
         {
-            _students.Add(studentId);
-            return Task.FromResult(0);
+            if (State.Students == null) State.Students = new List<Guid>();
+            State.Students.Add(studentId);
+            return State.WriteStateAsync();
         }
 
         public Task<string> GetName()
         {
-            return Task.FromResult(_name);
+            return Task.FromResult(State.Name);
         }
 
         public Task<string> GetSubject()
         {
-            return Task.FromResult(_subject);
+            return Task.FromResult(State.Subject);
         }
 
         public Task<ClassInfo> GetClassInfo()
         {
             var classInfo = new ClassInfo()
             {
-                Name = _name,
-                Subject = _subject,
-                Teacher = _teacher,
-                Students = _students
+                Name = State.Name,
+                Subject = State.Subject,
+                Teacher = State.Teacher,
+                Students = State.Students
             };
 
             return Task.FromResult(classInfo);
