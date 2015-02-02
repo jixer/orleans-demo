@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Orleans.Samples.ClassScheduler.Data;
 using Orleans.Samples.ClassScheduler.Gain.Interface;
 
 namespace Orleans.Samples.ClassScheduler.Gain
@@ -12,23 +14,23 @@ namespace Orleans.Samples.ClassScheduler.Gain
         {
             _firstName = firstName;
             _lastName = lastName;
-            return TaskDone.Done;
+            return Task.FromResult(0);
+        }
+
+        public Task<StudentInfo> GetInfo()
+        {
+            var studentInfo = new StudentInfo()
+            {
+                FirstName = _firstName,
+                LastName = _lastName
+            };
+            return Task.FromResult(studentInfo);
         }
 
         public Task<string> GetFullName()
         {
             string fullNAme = string.Format("{0} {1}", _firstName, _lastName);
             return Task.FromResult(fullNAme);
-        }
-
-        public Task<string> GetFirstName()
-        {
-            return Task.FromResult(_firstName);
-        }
-
-        public Task<string> GetLastName()
-        {
-            return Task.FromResult(_lastName);
         }
     }
 }

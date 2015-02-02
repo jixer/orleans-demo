@@ -56,6 +56,10 @@
     <Compile Include="Teacher.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{e618bd6a-c74c-4492-82b8-46345d0932c7}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="Interface\Interface.csproj">
       <Project>{8c3155a6-bb13-4b18-a381-a3f356613d7c}</Project>
       <Name>Interface</Name>

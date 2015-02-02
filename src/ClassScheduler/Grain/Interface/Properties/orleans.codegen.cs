@@ -25,6 +25,7 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
     using Orleans;
     using Orleans.Runtime;
     using System.Collections;
+    using Orleans.Samples.ClassScheduler.Data;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
@@ -128,16 +129,16 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                 return base.InvokeMethodAsync<object>(-1038651987, new object[] {name, subject} );
             }
             
-            System.Threading.Tasks.Task Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.AssignTeacher(Orleans.Samples.ClassScheduler.Gain.Interface.ITeacher teacher)
+            System.Threading.Tasks.Task Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.AssignTeacher(System.Guid teacherId)
             {
 
-                return base.InvokeMethodAsync<object>(-1952634395, new object[] {teacher is global::Orleans.Grain ? Orleans.Samples.ClassScheduler.Gain.Interface.TeacherFactory.Cast(teacher.AsReference()) : teacher} );
+                return base.InvokeMethodAsync<object>(-1658008689, new object[] {teacherId} );
             }
             
-            System.Threading.Tasks.Task Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.RegisterStudent(Orleans.Samples.ClassScheduler.Gain.Interface.IStudent student)
+            System.Threading.Tasks.Task Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.RegisterStudent(System.Guid studentId)
             {
 
-                return base.InvokeMethodAsync<object>(-1282562133, new object[] {student is global::Orleans.Grain ? Orleans.Samples.ClassScheduler.Gain.Interface.StudentFactory.Cast(student.AsReference()) : student} );
+                return base.InvokeMethodAsync<object>(314878422, new object[] {studentId} );
             }
             
             System.Threading.Tasks.Task<string> Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.GetName()
@@ -152,16 +153,10 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                 return base.InvokeMethodAsync<System.String>(-1553342840, new object[] {} );
             }
             
-            System.Threading.Tasks.Task<Orleans.Samples.ClassScheduler.Gain.Interface.ITeacher> Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.GetTeacher()
+            System.Threading.Tasks.Task<Orleans.Samples.ClassScheduler.Data.ClassInfo> Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.GetClassInfo()
             {
 
-                return base.InvokeMethodAsync<Orleans.Samples.ClassScheduler.Gain.Interface.ITeacher>(642188437, new object[] {} );
-            }
-            
-            System.Threading.Tasks.Task<int> Orleans.Samples.ClassScheduler.Gain.Interface.ICollegeClass.GetClassSize()
-            {
-
-                return base.InvokeMethodAsync<System.Int32>(1087638490, new object[] {} );
+                return base.InvokeMethodAsync<Orleans.Samples.ClassScheduler.Data.ClassInfo>(-98043815, new object[] {} );
             }
         }
     }
@@ -193,18 +188,16 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                         {
                             case -1038651987: 
                                 return ((ICollegeClass)grain).Configure((String)arguments[0], (String)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
-                            case -1952634395: 
-                                return ((ICollegeClass)grain).AssignTeacher((ITeacher)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
-                            case -1282562133: 
-                                return ((ICollegeClass)grain).RegisterStudent((IStudent)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1658008689: 
+                                return ((ICollegeClass)grain).AssignTeacher((Guid)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 314878422: 
+                                return ((ICollegeClass)grain).RegisterStudent((Guid)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case -1256896228: 
                                 return ((ICollegeClass)grain).GetName().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1553342840: 
                                 return ((ICollegeClass)grain).GetSubject().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 642188437: 
-                                return ((ICollegeClass)grain).GetTeacher().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 1087638490: 
-                                return ((ICollegeClass)grain).GetClassSize().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -98043815: 
+                                return ((ICollegeClass)grain).GetClassInfo().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }case -1097320095:  // IGrainWithGuidKey
@@ -236,18 +229,16 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                     {
                         case -1038651987:
                             return "Configure";
-                    case -1952634395:
+                    case -1658008689:
                             return "AssignTeacher";
-                    case -1282562133:
+                    case 314878422:
                             return "RegisterStudent";
                     case -1256896228:
                             return "GetName";
                     case -1553342840:
                             return "GetSubject";
-                    case 642188437:
-                            return "GetTeacher";
-                    case 1087638490:
-                            return "GetClassSize";
+                    case -98043815:
+                            return "GetClassInfo";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -367,22 +358,16 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                 return base.InvokeMethodAsync<object>(2085948699, new object[] {firstName, lastName} );
             }
             
+            System.Threading.Tasks.Task<Orleans.Samples.ClassScheduler.Data.StudentInfo> Orleans.Samples.ClassScheduler.Gain.Interface.IStudent.GetInfo()
+            {
+
+                return base.InvokeMethodAsync<Orleans.Samples.ClassScheduler.Data.StudentInfo>(-1168913303, new object[] {} );
+            }
+            
             System.Threading.Tasks.Task<string> Orleans.Samples.ClassScheduler.Gain.Interface.IStudent.GetFullName()
             {
 
                 return base.InvokeMethodAsync<System.String>(91621796, new object[] {} );
-            }
-            
-            System.Threading.Tasks.Task<string> Orleans.Samples.ClassScheduler.Gain.Interface.IStudent.GetFirstName()
-            {
-
-                return base.InvokeMethodAsync<System.String>(513673718, new object[] {} );
-            }
-            
-            System.Threading.Tasks.Task<string> Orleans.Samples.ClassScheduler.Gain.Interface.IStudent.GetLastName()
-            {
-
-                return base.InvokeMethodAsync<System.String>(160660420, new object[] {} );
             }
         }
     }
@@ -414,12 +399,10 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                         {
                             case 2085948699: 
                                 return ((IStudent)grain).SetName((String)arguments[0], (String)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1168913303: 
+                                return ((IStudent)grain).GetInfo().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 91621796: 
                                 return ((IStudent)grain).GetFullName().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 513673718: 
-                                return ((IStudent)grain).GetFirstName().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 160660420: 
-                                return ((IStudent)grain).GetLastName().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }case -1097320095:  // IGrainWithGuidKey
@@ -451,12 +434,10 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                     {
                         case 2085948699:
                             return "SetName";
+                    case -1168913303:
+                            return "GetInfo";
                     case 91621796:
                             return "GetFullName";
-                    case 513673718:
-                            return "GetFirstName";
-                    case 160660420:
-                            return "GetLastName";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -576,22 +557,16 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                 return base.InvokeMethodAsync<object>(2085948699, new object[] {firstName, lastName} );
             }
             
+            System.Threading.Tasks.Task<Orleans.Samples.ClassScheduler.Data.TeacherInfo> Orleans.Samples.ClassScheduler.Gain.Interface.ITeacher.GetInfo()
+            {
+
+                return base.InvokeMethodAsync<Orleans.Samples.ClassScheduler.Data.TeacherInfo>(-1168913303, new object[] {} );
+            }
+            
             System.Threading.Tasks.Task<string> Orleans.Samples.ClassScheduler.Gain.Interface.ITeacher.GetFullName()
             {
 
                 return base.InvokeMethodAsync<System.String>(91621796, new object[] {} );
-            }
-            
-            System.Threading.Tasks.Task<string> Orleans.Samples.ClassScheduler.Gain.Interface.ITeacher.GetFirstName()
-            {
-
-                return base.InvokeMethodAsync<System.String>(513673718, new object[] {} );
-            }
-            
-            System.Threading.Tasks.Task<string> Orleans.Samples.ClassScheduler.Gain.Interface.ITeacher.GetLastName()
-            {
-
-                return base.InvokeMethodAsync<System.String>(160660420, new object[] {} );
             }
         }
     }
@@ -623,12 +598,10 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                         {
                             case 2085948699: 
                                 return ((ITeacher)grain).SetName((String)arguments[0], (String)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1168913303: 
+                                return ((ITeacher)grain).GetInfo().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 91621796: 
                                 return ((ITeacher)grain).GetFullName().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 513673718: 
-                                return ((ITeacher)grain).GetFirstName().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 160660420: 
-                                return ((ITeacher)grain).GetLastName().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }case -1097320095:  // IGrainWithGuidKey
@@ -660,12 +633,10 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                     {
                         case 2085948699:
                             return "SetName";
+                    case -1168913303:
+                            return "GetInfo";
                     case 91621796:
                             return "GetFullName";
-                    case 513673718:
-                            return "GetFirstName";
-                    case 160660420:
-                            return "GetLastName";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -681,6 +652,149 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
                 default:
                     throw new System.InvalidCastException("interfaceId="+interfaceId);
             }
+        }
+    }
+}
+namespace Orleans.Samples.ClassScheduler.Gain.InterfaceSerializers
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Orleans.Serialization;
+    using Orleans.Samples.ClassScheduler.Data;
+    using System.Collections;
+    using System.Runtime.InteropServices;
+    
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Orleans_Samples_ClassScheduler_Data_ClassInfoSerialization
+    {
+        
+        static Orleans_Samples_ClassScheduler_Data_ClassInfoSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Orleans.Samples.ClassScheduler.Data.ClassInfo input = ((Orleans.Samples.ClassScheduler.Data.ClassInfo)(original));
+            Orleans.Samples.ClassScheduler.Data.ClassInfo result = new Orleans.Samples.ClassScheduler.Data.ClassInfo();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.Name = input.Name;
+            result.Students = ((IList<Guid>)(Orleans.Serialization.SerializationManager.DeepCopyInner(input.Students)));
+            result.Subject = input.Subject;
+            result.Teacher = ((Guid)(Orleans.Serialization.SerializationManager.DeepCopyInner(input.Teacher)));
+            return result;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Orleans.Samples.ClassScheduler.Data.ClassInfo input = ((Orleans.Samples.ClassScheduler.Data.ClassInfo)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Name, stream, typeof(String));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Students, stream, typeof(IList<Guid>));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Subject, stream, typeof(String));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Teacher, stream, typeof(Guid));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Orleans.Samples.ClassScheduler.Data.ClassInfo result = new Orleans.Samples.ClassScheduler.Data.ClassInfo();
+            result.Name = ((String)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(String), stream)));
+            result.Students = ((IList<Guid>)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(IList<Guid>), stream)));
+            result.Subject = ((String)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(String), stream)));
+            result.Teacher = ((Guid)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(Guid), stream)));
+            return result;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Orleans.Samples.ClassScheduler.Data.ClassInfo), DeepCopier, Serializer, Deserializer);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Orleans_Samples_ClassScheduler_Data_StudentInfoSerialization
+    {
+        
+        static Orleans_Samples_ClassScheduler_Data_StudentInfoSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Orleans.Samples.ClassScheduler.Data.StudentInfo input = ((Orleans.Samples.ClassScheduler.Data.StudentInfo)(original));
+            Orleans.Samples.ClassScheduler.Data.StudentInfo result = new Orleans.Samples.ClassScheduler.Data.StudentInfo();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.FirstName = input.FirstName;
+            result.LastName = input.LastName;
+            return result;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Orleans.Samples.ClassScheduler.Data.StudentInfo input = ((Orleans.Samples.ClassScheduler.Data.StudentInfo)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.FirstName, stream, typeof(String));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.LastName, stream, typeof(String));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Orleans.Samples.ClassScheduler.Data.StudentInfo result = new Orleans.Samples.ClassScheduler.Data.StudentInfo();
+            result.FirstName = ((String)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(String), stream)));
+            result.LastName = ((String)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(String), stream)));
+            return result;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Orleans.Samples.ClassScheduler.Data.StudentInfo), DeepCopier, Serializer, Deserializer);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.970.29197")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Orleans_Samples_ClassScheduler_Data_TeacherInfoSerialization
+    {
+        
+        static Orleans_Samples_ClassScheduler_Data_TeacherInfoSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Orleans.Samples.ClassScheduler.Data.TeacherInfo input = ((Orleans.Samples.ClassScheduler.Data.TeacherInfo)(original));
+            Orleans.Samples.ClassScheduler.Data.TeacherInfo result = new Orleans.Samples.ClassScheduler.Data.TeacherInfo();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.FirstName = input.FirstName;
+            result.LastName = input.LastName;
+            return result;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Orleans.Samples.ClassScheduler.Data.TeacherInfo input = ((Orleans.Samples.ClassScheduler.Data.TeacherInfo)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.FirstName, stream, typeof(String));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.LastName, stream, typeof(String));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Orleans.Samples.ClassScheduler.Data.TeacherInfo result = new Orleans.Samples.ClassScheduler.Data.TeacherInfo();
+            result.FirstName = ((String)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(String), stream)));
+            result.LastName = ((String)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(String), stream)));
+            return result;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Orleans.Samples.ClassScheduler.Data.TeacherInfo), DeepCopier, Serializer, Deserializer);
         }
     }
 }

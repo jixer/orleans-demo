@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Orleans.Samples.ClassScheduler.Data;
 using Orleans.Samples.ClassScheduler.Gain.Interface;
 
 namespace Orleans.Samples.ClassScheduler.Gain
@@ -9,26 +12,26 @@ namespace Orleans.Samples.ClassScheduler.Gain
     {
         private string _subject;
         private string _name;
-        private ITeacher _teacher;
-        private IList<IStudent> _students = new List<IStudent>();
+        private Guid _teacher;
+        private IList<Guid> _students = new List<Guid>();
 
         public Task Configure(string name, string subject)
         {
             _name = name;
             _subject = subject;
-            return TaskDone.Done;
+            return Task.FromResult(0);
         }
 
-        public Task AssignTeacher(ITeacher teacher)
+        public Task AssignTeacher(Guid teacherId)
         {
-            _teacher = teacher;
-            return TaskDone.Done;
+            _teacher = teacherId;
+            return Task.FromResult(0);
         }
 
-        public Task RegisterStudent(IStudent student)
+        public Task RegisterStudent(Guid studentId)
         {
-            _students.Add(student);
-            return TaskDone.Done;
+            _students.Add(studentId);
+            return Task.FromResult(0);
         }
 
         public Task<string> GetName()
@@ -41,14 +44,17 @@ namespace Orleans.Samples.ClassScheduler.Gain
             return Task.FromResult(_subject);
         }
 
-        public Task<ITeacher> GetTeacher()
+        public Task<ClassInfo> GetClassInfo()
         {
-            return Task.FromResult(_teacher);
-        }
+            var classInfo = new ClassInfo()
+            {
+                Name = _name,
+                Subject = _subject,
+                Teacher = _teacher,
+                Students = _students
+            };
 
-        public Task<int> GetClassSize()
-        {
-            return Task.FromResult(_students.Count);
+            return Task.FromResult(classInfo);
         }
     }
 }
