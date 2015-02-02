@@ -35,5 +35,16 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
         {
             return RedirectToAction("Index", "Class", new { id = viewModel.Id});
         }
+
+        public ActionResult Register()
+        {
+            return View(new RegistrationViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult Register(RegistrationViewModel registraion)
+        {
+            return RedirectToAction("Index", new {id = registraion.ClassId.ToString()});
+        }
     }
 }
