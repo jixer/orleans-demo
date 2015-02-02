@@ -1,0 +1,66 @@
+﻿@model Orleans.Samples.ClassScheduler.WebApp.Models.ClassViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("Index"))
+{
+    <div>
+        Enter class ID: @Html.TextBox("id") <input type="submit" value="Find" />
+    </div>
+}
+
+
+@if (Model != null)
+{
+    <hr/>
+    <div>
+        <h4>Class</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Subject)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Subject)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Teacher)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Teacher)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ClassSize)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClassSize)
+            </dd>
+
+        </dl>
+    </div>
+}
