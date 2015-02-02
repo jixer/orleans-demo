@@ -1,26 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
+using Orleans.Samples.ClassScheduler.Data;
+using Orleans.Samples.ClassScheduler.Gain.Interface;
+using Orleans.Samples.ClassScheduler.WebApp.Helper;
 using Orleans.Samples.ClassScheduler.WebApp.Models;
 
 namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
 {
     public class ClassController : Controller
     {
-        public ActionResult Index(string id)
+        public async Task<ActionResult> Index(string id)
         {
             if (string.IsNullOrEmpty(id)) return View();
+
+            OrleansHelper.EnsureOrleansClientInitialized();
+
+            Guid classGuid = new Guid(id);
+            ICollegeClass grain = GrainFactory.GetGrain<ICollegeClass>(classGuid);
+
+            ClassInfo classInfo = await grain.GetClassInfo();
+
+            ITeacher teacherGrain = GrainFactory.GetGrain<ITeacher>(classInfo.Teacher);
+            string teacherName = await teacherGrain.GetFullName();
 
             var classView = new ClassViewModel()
             {
                 Id = new Guid(id),
-                Name = "Calculus 101",
-                Subject = "MAT",
-                Teacher = "John Smith",
-                ClassSize = 5
+                Name = classInfo.Name,
+                Subject = classInfo.Subject,
+                Teacher = teacherName,
+                ClassSize = classInfo.Students.Count
             };
             return View(classView);
         }
@@ -33,6 +47,10 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
         [HttpPost]
         public ActionResult Create(ClassViewModel viewModel)
         {
+            OrleansHelper.EnsureOrleansClientInitialized();
+            ICollegeClass grain = GrainFactory.GetGrain<ICollegeClass>(viewModel.Id);
+            grain.Configure(viewModel.Name, viewModel.Subject);
+            grain.AssignTeacher(new Guid(viewModel.Teacher));
             return RedirectToAction("Index", "Class", new { id = viewModel.Id});
         }
     }

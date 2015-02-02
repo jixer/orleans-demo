@@ -37,12 +37,13 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(StudentViewModel student)
+        public ActionResult Create(StudentViewModel student)
         {
             OrleansHelper.EnsureOrleansClientInitialized();
 
             var grain = GrainFactory.GetGrain<IStudent>(student.Id);
-            await grain.SetName(student.FirstName, student.LastName);
+            grain.SetName(student.FirstName, student.LastName);
+
             return RedirectToAction("Index", new { id = student.Id.ToString() });
         }
     }

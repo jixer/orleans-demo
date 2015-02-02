@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using Orleans.Samples.ClassScheduler.Data;
+using Orleans.Samples.ClassScheduler.Gain.Interface;
+using Orleans.Samples.ClassScheduler.WebApp.Helper;
 using Orleans.Samples.ClassScheduler.WebApp.Models;
 
 namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
@@ -7,13 +11,20 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
     public class TeacherController : Controller
     {
         // GET: Teacher
-        public ActionResult Index(string teacherId)
+        public async Task<ActionResult> Index(string id)
         {
+            OrleansHelper.EnsureOrleansClientInitialized();
+
+            Guid teacherGuid = new Guid(id);
+
+            ITeacher grain = GrainFactory.GetGrain<ITeacher>(teacherGuid);
+            TeacherInfo teacherInfo = await grain.GetInfo();
+
             var teacher = new TeacherViewModel()
             {
-                Id = new Guid(teacherId),
-                FirstName = "John",
-                LastName = "Smith"
+                Id = teacherGuid,
+                FirstName = teacherInfo.FirstName,
+                LastName = teacherInfo.LastName
             };
             return View(teacher);
         }
@@ -26,7 +37,12 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
         [HttpPost]
         public ActionResult Create(TeacherViewModel teacher)
         {
-            return RedirectToAction("Index", new {teacherId = teacher.Id.ToString()});
+            OrleansHelper.EnsureOrleansClientInitialized();
+
+            var grain = GrainFactory.GetGrain<ITeacher>(teacher.Id);
+            grain.SetName(teacher.FirstName, teacher.LastName);
+            
+            return RedirectToAction("Index", new {id = teacher.Id.ToString()});
         }
     }
 }
