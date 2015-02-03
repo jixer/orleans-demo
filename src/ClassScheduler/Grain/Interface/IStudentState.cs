@@ -10,5 +10,6 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
     {
         string FirstName { get; set; }
         string LastName { get; set; }
+        IList<ICollegeClass> CLasses { get; set; }
     }
 }

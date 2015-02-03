@@ -10,6 +10,14 @@ namespace Orleans.Samples.ClassScheduler.Gain
     [StorageProvider(ProviderName = "AzureStore")]
     class CollegeClass : Grain<IClassState> , ICollegeClass
     {
+        private ICollegeClass _me;
+
+        public override Task ActivateAsync()
+        {
+            _me = GrainFactory.GetGrain<ICollegeClass>(this.GetPrimaryKey());
+            return base.ActivateAsync();
+        }
+
         public Task Configure(string name, string subject)
         {
             State.Name = name;
@@ -23,11 +31,12 @@ namespace Orleans.Samples.ClassScheduler.Gain
             return State.WriteStateAsync();
         }
 
-        public Task RegisterStudent(Guid studentId)
+        public async Task RegisterStudent(IStudent student)
         {
-            if (State.Students == null) State.Students = new List<Guid>();
-            State.Students.Add(studentId);
-            return State.WriteStateAsync();
+            if (State.Students == null) State.Students = new List<IStudent>();
+            State.Students.Add(student);
+            await student.Enroll(_me);
+            await State.WriteStateAsync();
         }
 
         public Task<string> GetName()
@@ -46,11 +55,15 @@ namespace Orleans.Samples.ClassScheduler.Gain
             {
                 Name = State.Name,
                 Subject = State.Subject,
-                Teacher = State.Teacher,
-                Students = State.Students
+                Teacher = State.Teacher
             };
 
             return Task.FromResult(classInfo);
+        }
+
+        public Task<IList<IStudent>> GetStudents()
+        {
+            return Task.FromResult(State.Students);
         }
     }
 }

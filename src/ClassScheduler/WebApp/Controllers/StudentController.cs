@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -21,13 +23,25 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
             var grain = GrainFactory.GetGrain<IStudent>(studentGuid);
 
             StudentInfo studentInfo = await grain.GetInfo();
+            IList<ICollegeClass> classGrains = await grain.GetClasses();
+            string[] enrolledClasses = new string[0];
+            if (classGrains != null && classGrains.Count > 0)
+            {
+                var nameTasks = new Task<string>[classGrains.Count];
+                for (int i = 0; i < classGrains.Count; i++)
+                {
+                    nameTasks[i] = classGrains[i].GetName();
+                }
+
+                enrolledClasses = await Task.WhenAll(nameTasks);
+            }
 
             var student = new StudentViewModel()
             {
                 Id = studentGuid,
                 FirstName = studentInfo.FirstName,
                 LastName = studentInfo.LastName,
-                Classes = new[] { "TODO: Implement", "TODO: Implement" }
+                Classes = enrolledClasses
             };
             return View(student);
         }

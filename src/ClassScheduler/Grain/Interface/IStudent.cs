@@ -11,5 +11,7 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
         Task SetName(string firstName, string lastName);
         Task<StudentInfo> GetInfo();
         Task<string> GetFullName();
+        Task Enroll(ICollegeClass collegeClass);
+        Task<IList<ICollegeClass>> GetClasses();
     }
 }

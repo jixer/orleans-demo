@@ -8,6 +8,5 @@ namespace Orleans.Samples.ClassScheduler.Data
         public string Name { get; set; }
         public string Subject { get; set; }
         public Guid Teacher { get; set; }
-        public IList<Guid> Students { get; set; }
     }
 }

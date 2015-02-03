@@ -11,6 +11,6 @@ namespace Orleans.Samples.ClassScheduler.Gain.Interface
         string Name { get; set; }
         string Subject { get; set; }
         Guid Teacher { get; set; }
-        IList<Guid> Students {get; set; } 
+        IList<IStudent> Students {get; set; } 
     }
 }

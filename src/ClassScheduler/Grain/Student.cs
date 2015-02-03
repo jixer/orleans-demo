@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Orleans.Providers;
 using Orleans.Samples.ClassScheduler.Data;
 using Orleans.Samples.ClassScheduler.Gain.Interface;
@@ -29,6 +30,18 @@ namespace Orleans.Samples.ClassScheduler.Gain
         {
             string fullNAme = string.Format("{0} {1}", State.FirstName, State.LastName);
             return Task.FromResult(fullNAme);
+        }
+
+        public Task Enroll(ICollegeClass collegeClass)
+        {
+            if (State.CLasses == null) State.CLasses = new List<ICollegeClass>();
+            State.CLasses.Add(collegeClass);
+            return State.WriteStateAsync();
+        }
+
+        public Task<IList<ICollegeClass>> GetClasses()
+        {
+            return Task.FromResult(State.CLasses);
         }
     }
 }

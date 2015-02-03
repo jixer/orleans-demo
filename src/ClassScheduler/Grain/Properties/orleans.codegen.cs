@@ -19,9 +19,10 @@ namespace Orleans.Samples.ClassScheduler.Gain
     using System;
     using System.Collections.Generic;
     using System.Collections;
-    using Orleans.CodeGeneration;
-    using Orleans;
     using Orleans.Samples.ClassScheduler.Gain.Interface;
+    using Orleans;
+    using Orleans.Runtime;
+    using Orleans.CodeGeneration;
     using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
     
@@ -41,7 +42,7 @@ namespace Orleans.Samples.ClassScheduler.Gain
 
             public Guid Teacher { get; set; }
 
-            public IList<Guid> Students { get; set; }
+            public IList<IStudent> Students { get; set; }
 
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
@@ -50,7 +51,7 @@ namespace Orleans.Samples.ClassScheduler.Gain
                 if (values.TryGetValue("Name", out value)) Name = (String) value;
                 if (values.TryGetValue("Subject", out value)) Subject = (String) value;
                 if (values.TryGetValue("Teacher", out value)) Teacher = (Guid) value;
-                if (values.TryGetValue("Students", out value)) Students = (IList<Guid>) value;
+                if (values.TryGetValue("Students", out value)) Students = (IList<IStudent>) value;
             }
 
             public override System.String ToString()
@@ -79,7 +80,7 @@ namespace Orleans.Samples.ClassScheduler.Gain
             this.Name = default(String);
             this.Subject = default(String);
             this.Teacher = default(Guid);
-            this.Students = default(IList<Guid>);
+            this.Students = default(IList<IStudent>);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]
@@ -117,17 +118,20 @@ namespace Orleans.Samples.ClassScheduler.Gain
 
             public String LastName { get; set; }
 
+            public IList<ICollegeClass> CLasses { get; set; }
+
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
                 object value;
                 if (values == null) { InitStateFields(); return; }
                 if (values.TryGetValue("FirstName", out value)) FirstName = (String) value;
                 if (values.TryGetValue("LastName", out value)) LastName = (String) value;
+                if (values.TryGetValue("CLasses", out value)) CLasses = (IList<ICollegeClass>) value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("StudentState( FirstName={0} LastName={1} )", FirstName, LastName);
+                return System.String.Format("StudentState( FirstName={0} LastName={1} CLasses={2} )", FirstName, LastName, CLasses);
             }
         
         public StudentState() : 
@@ -141,6 +145,7 @@ namespace Orleans.Samples.ClassScheduler.Gain
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
             result["FirstName"] = this.FirstName;
             result["LastName"] = this.LastName;
+            result["CLasses"] = this.CLasses;
             return result;
         }
         
@@ -148,6 +153,7 @@ namespace Orleans.Samples.ClassScheduler.Gain
         {
             this.FirstName = default(String);
             this.LastName = default(String);
+            this.CLasses = default(IList<ICollegeClass>);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]

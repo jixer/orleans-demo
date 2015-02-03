@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Orleans.Samples.ClassScheduler.Data;
@@ -20,11 +22,21 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
             ICollegeClass grain = GrainFactory.GetGrain<ICollegeClass>(classGuid);
 
             ClassInfo classInfo = await grain.GetClassInfo();
+            IList<IStudent> students = await grain.GetStudents();
+            string[] studentNames = new string[0];
+            if (students != null && students.Count > 0)
+            {
+                var studentNameTasks = new Task<string>[students.Count];
+                for (int i = 0; i < students.Count; i++)
+                {
+                    studentNameTasks[i] = students[i].GetFullName();
+                }
+
+                studentNames = await Task.WhenAll(studentNameTasks);
+            }
 
             ITeacher teacherGrain = GrainFactory.GetGrain<ITeacher>(classInfo.Teacher);
             string teacherName = await teacherGrain.GetFullName();
-            int studentCount = 0;
-            if (classInfo.Students != null) studentCount = classInfo.Students.Count;
 
             var classView = new ClassViewModel()
             {
@@ -32,8 +44,8 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
                 Name = classInfo.Name,
                 Subject = classInfo.Subject,
                 Teacher = teacherName,
-                ClassSize = studentCount,
-                Students = new[] { "TODO: Implement", "TODO: Implement" }
+                ClassSize = studentNames.Length,
+                Students = studentNames
             };
             return View(classView);
         }
@@ -64,7 +76,8 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
             OrleansHelper.EnsureOrleansClientInitialized();
 
             ICollegeClass grain = GrainFactory.GetGrain<ICollegeClass>(registration.ClassId);
-            await grain.RegisterStudent(registration.StudentId);
+            IStudent studentGrain = GrainFactory.GetGrain<IStudent>(registration.StudentId);
+            await grain.RegisterStudent(studentGrain);
 
             return RedirectToAction("Index", new {id = registration.ClassId.ToString()});
         }
