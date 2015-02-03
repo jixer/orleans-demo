@@ -1,19 +1,3 @@
-Add storage proiver reference
-Update provider in Orleans Configurations (service): 
-    <StorageProviders>
-      <Provider Type="Orleans.Storage.AzureTableStorage"
-                      Name="AzureStore"
-                      DataConnectionString="UseDevelopmentStorage=true" />
-    </StorageProviders>
+Updated view models to include students in classes and classes that student is registered for
+Updated views and controllers to utilze new fields
 
-Add storage interfaces
-
-Update grains
-	Use state
-		Grain<IState>
-		State.xxx = ""
-		
-	Add class attribute
-		[StorageProvider(ProviderName = "AzureStore")]
-
-Update controller creates to wait for result

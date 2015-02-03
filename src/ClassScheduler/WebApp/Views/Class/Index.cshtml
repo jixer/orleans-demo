@@ -62,5 +62,12 @@
             </dd>
 
         </dl>
+        <h4>Students Enrolled</h4>
+        <ul>
+            @foreach (var student in Model.Students)
+            {
+                <li>@student</li>
+            }
+        </ul>
     </div>
 }

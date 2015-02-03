@@ -12,5 +12,6 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Models
         public string Subject { get; set; }
         public string Teacher { get; set; }
         public int ClassSize { get; set; }
+        public IList<string> Students { get; set; } 
     }
 }

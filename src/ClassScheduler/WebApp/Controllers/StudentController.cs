@@ -26,7 +26,8 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
             {
                 Id = studentGuid,
                 FirstName = studentInfo.FirstName,
-                LastName = studentInfo.LastName
+                LastName = studentInfo.LastName,
+                Classes = new[] { "TODO: Implement", "TODO: Implement" }
             };
             return View(student);
         }

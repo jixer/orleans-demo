@@ -32,7 +32,8 @@ namespace Orleans.Samples.ClassScheduler.WebApp.Controllers
                 Name = classInfo.Name,
                 Subject = classInfo.Subject,
                 Teacher = teacherName,
-                ClassSize = studentCount
+                ClassSize = studentCount,
+                Students = new[] { "TODO: Implement", "TODO: Implement" }
             };
             return View(classView);
         }

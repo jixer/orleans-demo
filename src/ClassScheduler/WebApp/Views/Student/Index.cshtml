@@ -35,4 +35,11 @@
         </dd>
 
     </dl>
+    <h4>Student's Classes</h4>
+    <ul>
+        @foreach (var clss in Model.Classes)
+        {
+            <li>@clss</li>
+        }
+    </ul>
 </div>
